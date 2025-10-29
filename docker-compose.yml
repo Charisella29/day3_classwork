@@ -5,28 +5,28 @@ services:
       POSTGRES_USER: nimcuser
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: nimcdb
-      volumes: 
-        - ./database/db-init.sql:/docker-entrypoint-initdb.d/init.sql
-      port:
-        - "5432:5432"
+    volumes: 
+      - ./database/db-init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
     # backend section
   backend:
     build: ./backend
-    environmen:
-    POSTGREDS_USER: nimcuser
-    POSTGRES_PASSWORD: mypassword
-    POSTGRES_DB: nimcdb
-    POSTGRES_HOST: db
+    environment:
+      POSTGREDS_USER: nimcuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: nimcdb
+      POSTGRES_HOST: db
     ports:
-    - "5000:5000"
-    -depeends_on:
-    - db
+      - "5000:5000"
+    depends_on:
+      - db
   # Frontend section
   frontend:
-    build: ./Frontend
+    build: ./frontend
     ports:
-        - "3000:3000"
+      - "3000:3000"
     environment:
       REACT_APP_API_URL: http://backend:5000
-    depend_on:
-      - backendv5
+    depends_on:
+      - backend
