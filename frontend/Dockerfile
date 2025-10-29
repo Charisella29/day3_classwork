@@ -1,5 +1,5 @@
 # stage 4 frontend docker
-FROM node:18-apine
+FROM node:18-alpine
 
 WORKDIR /app
 
